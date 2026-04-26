@@ -1,5 +1,4 @@
-public class package jswingpractice; {
-    package jswingPractice;
+package jswingpractice;
 
 import java.awt.EventQueue;
 
@@ -141,4 +140,5 @@ public class DentalSystem extends JFrame {
 	}
 }
 
-}
+
+
