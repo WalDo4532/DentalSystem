@@ -1,4 +1,4 @@
-package jswingpractice;
+package jswingPractice;
 
 import java.awt.EventQueue;
 
@@ -8,11 +8,17 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class DentalSystem extends JFrame {
 
@@ -80,14 +86,49 @@ public class DentalSystem extends JFrame {
 
         // ================= CHECKBOX =================
         chkConsultation = new JCheckBox("Consultation (₱300)");
+        //Item State Changed 
+        chkConsultation.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    serviceModel.addRow(new Object[]{"Consultation", 300});
+                } else {
+                    removeService("Consultation");
+                }
+            }
+        });
         chkConsultation.setBounds(300, 50, 200, 20);
         contentPane.add(chkConsultation);
 
         chkExtraction = new JCheckBox("Tooth Extraction (₱500)");
+        //Item State changed 
+        chkExtraction.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                serviceModel.addRow(new Object[]{"Tooth Extraction", 500});
+            } else {
+                removeService("Tooth Extraction");
+            }
+        });
         chkExtraction.setBounds(300, 80, 200, 20);
         contentPane.add(chkExtraction);
 
         chkCleaning = new JCheckBox("Teeth Cleaning (₱800)");
+        chkCleaning.addItemListener(new ItemListener() {
+        	//XXX Item state Change
+        	public void itemStateChanged(ItemEvent e) {
+        		chkCleaning.addItemListener(new ItemListener() {
+        		    public void itemStateChanged(ItemEvent e) {
+
+        		        if (e.getStateChange() == ItemEvent.SELECTED) {
+        		            // Add service when checked
+        		            serviceModel.addRow(new Object[]{"Teeth Cleaning", 800});
+        		        } else {
+        		            // Remove service when unchecked
+        		            removeService("Teeth Cleaning");
+        		        }
+        		    }
+        		});
+        	}
+        });
         chkCleaning.setBounds(300, 110, 200, 20);
         contentPane.add(chkCleaning);
 
@@ -126,19 +167,62 @@ public class DentalSystem extends JFrame {
         btnClear.addActionListener(e -> clearFields());
     }
 	
-	private void addService() {
-		
-		
-	}
+    private void addService() {
+    	//Service Table
+    	serviceModel.setRowCount(0);
+    	
+    	if(chkConsultation.isSelected()) {
+    		 serviceModel.addRow(new Object[]{"Consultation", 300});
+    	}
+
+    	if(chkExtraction.isSelected()) {
+   		 serviceModel.addRow(new Object[]{"Tooth Extraction", 300});
+   	}
+
+    	if(chkCleaning.isSelected()) {
+   		 serviceModel.addRow(new Object[]{"Tooth Cleaning", 300});
+   	}
+    	//Validations
+    	if (serviceModel.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Please select at least one service.");
+        }
+
+    }
 	
 	private void calculateBill() {
-		
+		//Transaction Table Here
+		String userName = txtName.getText();
+		String Age = txtAge.getText();
+
+		//Validations of requirments
+		if (userName.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Name is Required!");
+			return;
+		}
+
+		if (Age.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Age is Required!");
+			return;
+		}
 	}
-	
+
+	//XXX clear fields
 	private void clearFields() {
 		
+		//validations again
+		
+		
 	}
+	//Remove Service 
+	private void removeService(String serviceName) {
+	    for (int i = 0; i < serviceModel.getRowCount(); i++) {
+	        if (serviceModel.getValueAt(i, 0).equals(serviceName)) {
+	            serviceModel.removeRow(i);
+	            break;
+	        }
+	    }
+	}
+	
+	
+	
 }
-
-
-
