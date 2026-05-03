@@ -436,9 +436,9 @@ public class DentalClinic extends JFrame {
 					return;
 				}
 				// Check if age contains only numbers
-         if (!Age.matches("\\d+")) {
-            JOptionPane.showMessageDialog(contentPane, "Age must contain numbers only!", "Validation Error",
-            JOptionPane.WARNING_MESSAGE);
+                if (!Age.matches("\\d+")) {
+                    JOptionPane.showMessageDialog(contentPane, "Age must contain numbers only!", "Validation Error",
+                            JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 				int userAge;
