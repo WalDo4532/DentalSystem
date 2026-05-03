@@ -419,9 +419,15 @@ public class DentalClinic extends JFrame {
 
 				// Check if name is empty
 				if (userName.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Name is Required!");
-					return;
-				}
+    JOptionPane.showMessageDialog(null, "Name is Required!");
+    return;
+}
+ 
+// Check if it contains numbers or invalid characters
+	if (!userName.matches("[a-zA-Z ]+")) {
+    JOptionPane.showMessageDialog(null, "Name must contain letters only!");
+    return;
+}
 
 				// Check if age is empty
 				if (Age.isEmpty()) {
@@ -429,6 +435,12 @@ public class DentalClinic extends JFrame {
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
+				// Check if age contains only numbers
+         if (!Age.matches("\\d+")) {
+            JOptionPane.showMessageDialog(contentPane, "Age must contain numbers only!", "Validation Error",
+            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
 				int userAge;
 				try {
 					userAge = Integer.parseInt(Age);
@@ -451,6 +463,10 @@ public class DentalClinic extends JFrame {
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
+				if (!contact.matches("\\d+")) {
+                     JOptionPane.showMessageDialog(null, "Contact must contain numbers only!");
+                     return;
+                }
 				
 				// Validate Philippine mobile number format
 				if (!contact.matches("^09\\d{9}$")) {
